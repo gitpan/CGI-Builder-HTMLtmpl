@@ -1,5 +1,5 @@
 package CGI::Builder::HTMLtmpl ;
-$VERSION = 1.03 ;
+$VERSION = 1.1 ;
 
 # This file uses the "Perlish" coding style
 # please read http://perl.4pro.net/perlish_coding_style.html
@@ -9,7 +9,14 @@ $VERSION = 1.03 ;
 ; $Carp::Internal{'HTML::Template'}++
 ; $Carp::Internal{+__PACKAGE__}++
 
-; use Object::props
+; my $print_code
+; BEGIN
+   { $print_code = sub
+                    { shift()->CGI::Builder::HTMLtmpl::ht_print(@_)
+                    }
+   }
+
+   ; use Object::props
       ( { name       => 'ht'
         , default    => sub{ shift()->ht_new(@_) }
         }
@@ -17,7 +24,7 @@ $VERSION = 1.03 ;
         , default    => '.tmpl'
         }
       , { name       => 'page_content'
-        , default    => sub{ $_[0]->ht->output() }
+        , default    => sub{ $print_code }
         }
       )
       
@@ -37,6 +44,24 @@ $VERSION = 1.03 ;
    { HTML::Template->new( %{$_[0]->ht_new_args} )
    }
 
+; sub page_content_check
+   { my $s  = shift
+   ; unless ( $s->page_content eq $print_code )  # not managed by ht
+      { $s->CGI::Builder::page_content_check
+      }
+     else
+      { my $template = $s->page_name
+                     . $s->page_suffix
+      # check
+      ; $s->ht->_find_file( $template )
+      }
+   }
+
+; sub CGI::Builder::HTMLtmpl::ht_print
+   { print shift()->ht->output()
+   }
+   
+      
 ; 1
    
 __END__
@@ -45,7 +70,7 @@ __END__
 
 CGI::Builder::HTMLtmpl - CGI::Builder and HTML::Template integration
 
-=head1 VERSION 1.03
+=head1 VERSION 1.1
 
 To have the complete list of all the extensions of the CBF, see L<CGI::Builder/"Extensions List">
 
@@ -86,6 +111,8 @@ From the directory where this file is located, type:
 
 =head1 DESCRIPTION
 
+B<Note>: You should know L<CGI::Builder>.
+
 This module transparently integrates C<CGI::Builder> and C<HTML::Template> in a very handy and flexible framework that can save you some coding. It provides you a mostly automatic template system based on HTML::Template: usually you will have just to supply the run time values to the object and this extension will manage automatically all the other tasks of the page production process (such as generating the output and setting the C<page_content> property).
 
 B<Note>: With this extension you don't need to explicitly set the C<page_content> to the output of your template object (C<< ht->output() >>) in your Page Handlers, because it will be automatically set. You should explicitly set the C<page_content> property just in case you want to bypass the template system:
@@ -105,20 +132,6 @@ B<Note>: With this extension you don't need to explicitly set the C<page_content
     }
 
 B<Note>: This extension is not as magic and memory saving as the L<CGI::Builder::Magic|CGI::Builder::Magic> template extension, because HTML::Template requires a specific input data structure (i.e. does not allow call back subs unless you use the HTML::Template::Expr), and does not allow to print the output during the process. On the other hand it should be some milliseconds faster than CGI::Builder::Magic in producing the output.
-
-=head2 Useful links
-
-=over
-
-=item *
-
-A simple and useful navigation system between the various CBF extensions is available at this URL: L<http://perl.4pro.net>
-
-=item *
-
-More examples and more practical topics are available in the mailing list at this URL: L<http://lists.sourceforge.net/lists/listinfo/cgi-builder-users>
-
-=back
 
 =head1 EXAMPLES
 
@@ -276,11 +289,7 @@ Don't explicitly set the C<page_content> property unless you want to bypass the 
 
 =head1 SUPPORT
 
-Support for all the modules of the CBF is via the mailing list. The list is used for general support on the use of the CBF, announcements, bug reports, patches, suggestions for improvements or new features. The API to the CBF is stable, but if you use the CBF in a production environment, it's probably a good idea to keep a watch on the list.
-
-You can join the CBF mailing list at this url:
-
-L<http://lists.sourceforge.net/lists/listinfo/cgi-builder-users>
+See L<CGI::Builder/"SUPPORT">.
 
 =head1 AUTHOR and COPYRIGHT
 

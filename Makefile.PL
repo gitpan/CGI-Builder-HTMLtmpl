@@ -3,19 +3,20 @@
 
 ; use ExtUtils::MakeMaker
 
-; my $dist = 'CGI::Builder::HTMLtmpl'
-; my $vers = '1.03'
+; my $pm = 'lib/CGI/Builder/HTMLtmpl.pm'
 
 ; WriteMakefile
-   ( NAME           => $dist
-   , VERSION        => $vers
+   ( NAME           => 'CGI::Builder::HTMLtmpl'
+   , VERSION_FROM   => $pm
    , ( $] ge '5.005' )
      ? ( AUTHOR     => 'Domizio Demichelis - perl.4pro.net'
-       , ABSTRACT   => 'CGI::Builder and HTML::Template integration'
+       , ABSTRACT_FROM => $pm
        )
      : ()
-   , PREREQ_PM      => { 'CGI::Builder'   => '1.0'
-                       , 'HTML::Template' => '1.0'
+   , PREREQ_PM      => { 'CGI::Builder'   => 1.0
+                       , 'Object::props'  => 1.62
+                       , 'Object::groups' => 1.62
+                       , 'HTML::Template' => 2.6
                        }
    )
 

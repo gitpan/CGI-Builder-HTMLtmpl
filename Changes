@@ -1,5 +1,11 @@
 CGI-Builder-HTMLtmpl Latest Versions Changes
 
+Version 1.1
+- Added the page_content_check method
+- Changed the page_content default sub: it prints the output in the RESPONSE
+  phase thus avoiding to call HTML::Template::output() method before.
+  This fixes a few problems reported in the ML
+- A few minor changes in the Makefile.PL and the POD
 
 Version 1.03
 - Eliminated version check and installation feedback system
