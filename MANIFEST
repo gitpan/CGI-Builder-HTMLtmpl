@@ -7,4 +7,6 @@ t/01_features.t
 t/Test.pm
 t/tm/index.tmpl
 t/tm/other.tmpl
+t/tm2/index.tmpl
+t/tm2/other.tmpl
 META.yml                                 Module meta-data (added by MakeMaker)

@@ -1,6 +1,6 @@
 #!perl -w
 ; use strict
-; use Test::More tests => 3
+; use Test::More tests => 6
 ; use CGI
 
 
@@ -30,5 +30,15 @@
 ; ok( $$o3 =~ /other start->Hello<-other end/ )
 
 
+# filename + path override
+; my $ap4 = HTAppl4->new()
+; my $o4 = $ap4->capture('process')
+; ok( $$o4 =~ /222 other start->Hello<-other end/ )
 
+; my $ap5 = HTAppl5->new()
+; my $o5 = $ap5->capture('process')
+; ok( $$o5 =~ /222 other start->Hello<-other end/ )
 
+; my $ap6 = HTAppl6->new()
+; my $o6 = $ap6->capture('process')
+; ok( $$o6 =~ /222 other start->Hello<-other end/ )
