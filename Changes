@@ -1,4 +1,9 @@
 CGI-Builder-HTMLtmpl Latest Versions Changes
 
+
+Version 1.01
+- Changed Makefile.PL version check
+- Minor POD changes
+
 Version 1.0
 - First public release

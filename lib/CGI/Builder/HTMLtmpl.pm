@@ -1,5 +1,5 @@
 package CGI::Builder::HTMLtmpl ;
-$VERSION = 1.0 ;
+$VERSION = 1.01 ;
 
 ; use strict
 ; use HTML::Template
@@ -21,7 +21,8 @@ $VERSION = 1.0 ;
 ; use Object::groups
       ( { name       => 'ht_new_args'
         , default    =>  sub
-                          { { filename => $_[0]->page_name
+                          { return
+                            { filename => $_[0]->page_name
                                         . $_[0]->page_suffix
                             , path     => [ $_[0]->page_path ]
                             }
@@ -41,7 +42,7 @@ __END__
 
 CGI::Builder::HTMLtmpl - CGI::Builder and HTML::Template integration
 
-=head1 VERSION 1.0
+=head1 VERSION 1.01
 
 To have the complete list of all the extensions of the CBF, see L<CGI::Builder/"Extensions List">
 
@@ -56,9 +57,9 @@ To have the complete list of all the extensions of the CBF, see L<CGI::Builder/"
 
 =item CPAN
 
-    perl -MCPAN -e 'install CGI::Builder::HTMLtmpl'
+    perl -MCPAN -e 'install Apache::CGI::Builder'
 
-If you want to install all the extensions and prerequisites of the CBF, all in one easy step:
+You have also the possibility to use the Bundle to install all the extensions and prerequisites of the CBF in just one step. Please, notice that the Bundle will install A LOT of modules that you might not need, so use it specially if you want to extensively try the CBF.
 
     perl -MCPAN -e 'install Bundle::CGI::Builder::Complete'
 
@@ -101,6 +102,20 @@ B<Note>: With this extension you don't need to explicitly set the C<page_content
     }
 
 B<Note>: This extension is not as magic and memory saving as the L<CGI::Builder::Magic|CGI::Builder::Magic> template extension, because HTML::Template requires a specific input data structure (i.e. does not allow call back subs unless you use the HTML::Template::Expr), and does not allow to print the output during the process. On the other hand it should be some milliseconds faster than CGI::Builder::Magic in producing the output.
+
+=head2 Useful links
+
+=over
+
+=item *
+
+A simple and useful navigation system between the various CBF extensions is available at this URL: L<http://perl.4pro.net>
+
+=item *
+
+More practical topics are probably discussed in the mailing list at this URL: L<http://lists.sourceforge.net/lists/listinfo/cgi-builder-users>
+
+=back
 
 =head1 EXAMPLES
 
@@ -168,7 +183,7 @@ This module adds some template properties (all those prefixed with 'ht_') to the
 
 This property returns the internal C<HTML::Template> object that is automatically created just before you use it. Use it to address all the HTML::Template methods.
 
-B<Note>: You can change the default arguments that are internally used to create the object by using the C<ht_new_args> property, or you can completely override the creation of the internal object by overriding the C<ht_new()> method.
+B<Note>: You can change the default arguments that are internally used to create the object by using the C<ht_new_args> group accessor, or you can completely override the creation of the internal object by overriding the C<ht_new()> method.
 
 =head2 ht_new_args( arguments )
 
@@ -234,7 +249,7 @@ This module sets the default of the C<page_suffix> to the traditional '.tmpl'. Y
 
 =head3 CBF page_content
 
-This module sets the default of the C<page_content> to a CODE reference that produces the page content by using the internal C<< ht->output() >>. If you want to bypass the template system in any Page Handler, just explicitly set the C<page_content> to the content you want to send.
+This module sets the default of the C<page_content> to the template output produced by using the internal C<< ht->output() >>. If you want to bypass the template system in any Page Handler, just explicitly set the C<page_content> to the content you want to send.
 
 =head1 METHODS
 
@@ -256,15 +271,17 @@ Don't explicitly set the C<page_content> property unless you want to bypass the 
 
 =back
 
-=head1 SUPPORT and FEEDBACK
+=head1 SUPPORT
+
+Support for all the modules of the CBF is via the mailing list. The list is used for general support on the use of the CBF, announcements, bug reports, patches, suggestions for improvements or new features. The API to the CBF is stable, but if you use the CBF in a production environment, it's probably a good idea to keep a watch on the list.
 
 You can join the CBF mailing list at this url:
 
-    http://lists.sourceforge.net/lists/listinfo/cgi-builder-users
+L<http://lists.sourceforge.net/lists/listinfo/cgi-builder-users>
 
 =head1 AUTHOR and COPYRIGHT
 
-© 2004 by Domizio Demichelis (http://perl.4pro.net)
+© 2004 by Domizio Demichelis (L<http://perl.4pro.net>)
 
 All Rights Reserved. This module is free software. It may be used, redistributed and/or modified under the same terms as perl itself.
 
