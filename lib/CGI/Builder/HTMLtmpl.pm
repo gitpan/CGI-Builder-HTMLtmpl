@@ -1,10 +1,10 @@
 package CGI::Builder::HTMLtmpl ;
-$VERSION = '1.2' ;
+$VERSION = 1.21 ;
+use strict ;
 
 # This file uses the "Perlish" coding style
 # please read http://perl.4pro.net/perlish_coding_style.html
 
-; use strict
 ; use HTML::Template
 ; use File::Spec
 ; $Carp::Internal{'HTML::Template'}++
@@ -93,11 +93,13 @@ $VERSION = '1.2' ;
    
 __END__
 
+=pod
+
 =head1 NAME
 
 CGI::Builder::HTMLtmpl - CGI::Builder and HTML::Template integration
 
-=head1 VERSION 1.2
+=head1 VERSION 1.21
 
 To have the complete list of all the extensions of the CBF, see L<CGI::Builder/"Extensions List">
 
@@ -284,7 +286,7 @@ B<Note>: You can completely override the creation of the internal object by over
 
 This property group accessor handles the HTML::Template parameters that are internally passed to the C<ht> object before the output production. Use it to collect the params that will be passed to the object.
 
-B<Note>: This group accessor has been added in the 1.2 version in order to avoid to use the C<ht> property:
+B<Note>: This group accessor has been added in the 1.21 version in order to avoid to use the C<ht> property:
 
    # deprecated
    $s->ht->param(...)
@@ -327,6 +329,14 @@ If (and only if) your application has to switch_to after using the C<ht> propert
       $s->CGI::Builder::switch_to(@_);
   }
 
+=head2 CBF overridden methods
+
+=head3 page_content_check
+
+This extension use this method to check if the template file exists before using its template print method, thus avoiding a fatal error when the requested page is not found.
+
+B<Note>: You don't need to directly use this method since it's internally called at the very start of the RESPONSE phase. You don't need to override it if you want just to send a different header status, since the CBF sets the status just if it is not defined yet.
+
 =head1 AVOIDING MISTAKES
 
 =over
@@ -354,4 +364,6 @@ All Rights Reserved. This module is free software. It may be used, redistributed
 =head1 CREDITS
 
 Thanks to Rob Arnold for his testing and suggestions.
+
+=cut
 

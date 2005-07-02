@@ -1,16 +1,13 @@
 #!perl -w
 ; use strict
 ; use Test::More tests => 6
-; use CGI
+#; use CGI
 
 
 
 ; BEGIN
-   { eval { require './t/Test.pm'
-
-          }
-         || require './Test.pm'
-   ; chdir './t'
+   { chdir './t'
+   ; require './Test.pm'
    }
 
 
@@ -42,3 +39,4 @@
 ; my $ap6 = HTAppl6->new()
 ; my $o6 = $ap6->capture('process')
 ; ok( $$o6 =~ /222 other start->Hello<-other end/ )
+

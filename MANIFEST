@@ -5,6 +5,8 @@ MANIFEST			This list of files
 README
 t/01_features.t
 t/Test.pm
+t/test_pod.t
+t/test_pod_coverage.t
 t/tm/index.tmpl
 t/tm/other.tmpl
 t/tm2/index.tmpl

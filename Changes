@@ -1,12 +1,15 @@
 CGI-Builder-HTMLtmpl Latest Versions Changes
 
+Version 1.21
+- Maintainance release. A few minor changes
+
 Version 1.2
 - Fixed a problem related to pages with no templates
 - Added the internal ht_exists method to check if a template file exists
   (without using the HTML::Template object)
 - Added the ht_param group accessor in order to collect the params that will
   be passed to the internal ht object
-- Deprecated the use of $s->ht->param() 
+- Deprecated the use of $s->ht->param()
 - The ht object becomes an internal object: added an advanced note about
   its use
 - Added a few tests
